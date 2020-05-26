@@ -1,0 +1,351 @@
+{
+  "intents": [
+    {
+      "intent": "helpline",
+      "examples": [
+        {
+          "text": "Support"
+        },
+        {
+          "text": "Helpline"
+        },
+        {
+          "text": "Services"
+        },
+        {
+          "text": "I need a service"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "services_available",
+      "examples": [
+        {
+          "text": "List of services"
+        },
+        {
+          "text": "Services available"
+        },
+        {
+          "text": "Available services"
+        },
+        {
+          "text": "Services"
+        },
+        {
+          "text": "what are the services?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "thank_you",
+      "examples": [
+        {
+          "text": "Thank you"
+        },
+        {
+          "text": "It's my pleasure to help"
+        },
+        {
+          "text": "Thanks"
+        },
+        {
+          "text": "Cheers!"
+        },
+        {
+          "text": "Thx"
+        },
+        {
+          "text": "Anytime. That's what I'm here for"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "greetings",
+      "examples": [
+        {
+          "text": "Hai"
+        },
+        {
+          "text": "Kia Ora"
+        },
+        {
+          "text": "Welcome"
+        },
+        {
+          "text": "Hello"
+        },
+        {
+          "text": "Hi"
+        },
+        {
+          "text": "Good Afternoon"
+        },
+        {
+          "text": "Good Morning"
+        },
+        {
+          "text": "Hey"
+        }
+      ],
+      "description": ""
+    }
+  ],
+  "entities": [
+    {
+      "entity": "sys-number",
+      "values": [],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "helpline",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "ambulance",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "online",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "travel",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    }
+  },
+  "dialog_nodes": [
+    {
+      "type": "event_handler",
+      "parent": "node_4_1590418970535",
+      "event_name": "focus",
+      "dialog_node": "handler_3_1590419453114",
+      "previous_sibling": "slot_8_1590488968667"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_4_1590418970535",
+      "variable": "$helpline",
+      "dialog_node": "slot_8_1590488968667"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "What is the Service you are looking for?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "slot_8_1590488968667",
+      "event_name": "focus",
+      "dialog_node": "handler_3_1590488968680",
+      "previous_sibling": "handler_9_1590488968680"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "You can refer this Link for <a href=\"https://www.olacabs.com/\">Cab Service.</a>"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "slot_8_1590488968667",
+      "conditions": "$helpline==\"travel\"",
+      "event_name": "filled",
+      "dialog_node": "handler_1_1590491650157",
+      "previous_sibling": "handler_6_1590491436131"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "You can refer this Link for<a href=\"http://www.gandhihospital.in/\"> Ambulance Service</a> ."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "slot_8_1590488968667",
+      "conditions": "$helpline==\"ambulance\"",
+      "event_name": "filled",
+      "dialog_node": "handler_4_1590490967874",
+      "previous_sibling": "handler_3_1590488968680"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "You can refer this Link for<a href=\"https://hyderabad.telangana.gov.in/click-here-to-download-covid-19-iec-material/\">Covid-19 Online Support .</a>"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "slot_8_1590488968667",
+      "conditions": "$helpline==\"online\"",
+      "event_name": "filled",
+      "dialog_node": "handler_6_1590491436131",
+      "previous_sibling": "handler_4_1590490967874"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_8_1590488968667",
+      "context": {
+        "helpline": "@helpline"
+      },
+      "conditions": "@helpline",
+      "event_name": "input",
+      "dialog_node": "handler_9_1590488968680"
+    },
+    {
+      "type": "standard",
+      "title": "Thank You",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thank You!Always ready to help."
+              },
+              {
+                "text": "You Are Welcome!"
+              },
+              {
+                "text": "It's My Pleasure to Help you"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#thank_you",
+      "dialog_node": "Anything else",
+      "previous_sibling": "node_5_1590401707559",
+      "disambiguation_opt_out": true
+    },
+    {
+      "type": "frame",
+      "title": "HelpLine",
+      "conditions": "@helpline",
+      "dialog_node": "node_4_1590418970535",
+      "previous_sibling": "node_9_1590419366420"
+    },
+    {
+      "type": "standard",
+      "title": "greetings",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Welcome "
+              },
+              {
+                "text": "Hi How can I help U?"
+              },
+              {
+                "text": "Hi I am your assistant. Tell me how can I help."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#greetings",
+      "dialog_node": "node_9_1590419366420",
+      "previous_sibling": "node_1_1590431007341"
+    },
+    {
+      "type": "standard",
+      "title": "ServicesAvailable",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "There are mainly 3 Services provided by 24/7-MobileBot.They are Ambulance Service,Travel Service,Online Help."
+              },
+              {
+                "text": ""
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#services_available",
+      "dialog_node": "node_5_1590401707559",
+      "previous_sibling": "node_4_1590418970535"
+    },
+    {
+      "type": "standard",
+      "title": "welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Welcome to 24/7- Mobile Bot. How can I help you!"
+              },
+              {
+                "text": "Hi there how can I help you?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "node_1_1590431007341"
+    }
+  ],
+  "counterexamples": [],
+  "system_settings": {
+    "off_topic": {
+      "enabled": true
+    },
+    "disambiguation": {
+      "prompt": "Did you mean:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "None of the above"
+    },
+    "system_entities": {
+      "enabled": true
+    },
+    "human_agent_assist": {
+      "prompt": "Did you mean:"
+    },
+    "spelling_auto_correct": true
+  },
+  "learning_opt_out": false,
+  "name": "remote education",
+  "language": "en",
+  "description": ""
+}
